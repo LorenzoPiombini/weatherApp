@@ -25,19 +25,7 @@ class forecastingCollectioViewCell: UICollectionViewCell {
         degreeLabel.text = "\(convertDegrees(degreese: data.temp, celsiusTouchInside: celsius ))°"
     }
     
-    func createImageURLtoCacheImage(imageIconStoreIn:Hourly)-> URL {
-        let imageBaseurl = "http://openweathermap.org/img/wn/"
-        let imageName = "\(imageIconStoreIn.weather[0].icon).png"
-        let url = URL(string: "\(imageBaseurl)\(imageName)")!
-        return url
-    }
-    
-    func createImageURLtoCacheImageWeek(imageIconStoreIn:Daily)-> URL {
-        let imageBaseurl = "http://openweathermap.org/img/wn/"
-        let imageName = "\(imageIconStoreIn.weather[0].icon).png"
-        let url = URL(string: "\(imageBaseurl)\(imageName)")!
-        return url
-    }
+
 
     func dayFormatter(fromDayTime: Daily)-> String{
         let interval = (fromDayTime.dt)
@@ -54,7 +42,7 @@ class forecastingCollectioViewCell: UICollectionViewCell {
         let now = Date(timeIntervalSince1970: TimeInterval(interval))
         let dateFormatter = DateFormatter()
         let  now2 = dateFormatter.calendar.component(.hour, from: now)
-               
+        
                 if now2 - 12 < 0 && now2 - 12 > -12 {
                     return "\(now2) am "
                 } else if now2 - 12 == 0 {

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>989013159997-u2au30ugnc7n39b9lc0529qfu8t19e2i.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.989013159997-u2au30ugnc7n39b9lc0529qfu8t19e2i</string>
+	<key>API_KEY</key>
+	<string>AIzaSyB1XhkBlzC5x5hm6z0TAUdBVsI-sHz1m84</string>
+	<key>GCM_SENDER_ID</key>
+	<string>989013159997</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>PlanBSoftwarehouse.WeatherAPP</string>
+	<key>PROJECT_ID</key>
+	<string>science-weather-up</string>
+	<key>STORAGE_BUCKET</key>
+	<string>science-weather-up.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:989013159997:ios:f624d8aea0a3d9ed893a54</string>
+</dict>
+</plist>

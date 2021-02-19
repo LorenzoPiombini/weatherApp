@@ -49,6 +49,14 @@ func didSunsetOccured(data: apiResponseForHourForecastinAndDay) -> Bool {
     
 }
 
+func dayFormatter(fromDayTime: Daily)-> String{
+    let interval = (fromDayTime.dt)
+    let now = Date(timeIntervalSince1970: TimeInterval(interval))
+    let dateFormatter = DateFormatter()
+    let  now2 = dateFormatter.calendar.component(.weekday, from: now)
+    return "\(weekDays[now2]!)"
+}
+
 
    
     

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+import UIKit
 
 
 
@@ -76,6 +76,8 @@ struct Daily: Codable {
     var wind_speed: Double
     var wind_deg: Int
     var weather: [weather]
+    var rain: Double?
+    var snow: Double?
     var pop: Double
     var uvi: Double
 }
@@ -106,7 +108,7 @@ struct weather: Codable {
 }
 
 
-struct coord: Codable{
+struct coord: Codable {
     var lon : Double
     var lat: Double
 
@@ -146,6 +148,7 @@ struct sys: Codable{
 
 var celsius = false
 
+
 func convertDegrees(degreese: Double, celsiusTouchInside: Bool ) -> Int {
     let celsius = (degreese) - 273.15
     let fahrenheit = (celsius * 1.8) + 32
@@ -156,7 +159,14 @@ func convertDegrees(degreese: Double, celsiusTouchInside: Bool ) -> Int {
     }
     
 }
-    
- 
 
+func setTheBackground(accordingWith Apiresponse: apiResponseForHourForecastinAndDay, viewController: UIViewController ){
+if didSunsetOccured(data: Apiresponse) {
+    viewController.view.backgroundColor = UIColor(patternImage: UIImage(named: "backgroundForNightTime.jpg")!)
+}else {
+    viewController.view.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
+}
+}
+ 
+ 
                  

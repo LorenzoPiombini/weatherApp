@@ -9,18 +9,24 @@ import Foundation
 import CoreLocation
 import UIKit
 struct LocationManager {
-    let locationManager = CLLocationManager()
+   var locationManager = CLLocationManager()
     
     
     //this is the location manager config called in the ViewDidLoad func
     func locationConfing(delegate: UIViewController){
         
         locationManager.delegate = delegate as? CLLocationManagerDelegate
-        locationManager.requestWhenInUseAuthorization()
+        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         locationManager.requestAlwaysAuthorization()
+        locationManager.startMonitoringSignificantLocationChanges()
+        
     }
     
-    
+    mutating func locationStatus(){
+        if locationManager.authorizationStatus != .authorizedAlways {
+            locationManager.requestWhenInUseAuthorization()
+        }
+    }
     // i used this method because it is a way faster than .requestLocation() we the latter the app took a couple o second before loading the location
     func startFindingLocation(){
         locationManager.startUpdatingLocation()
@@ -30,4 +36,7 @@ struct LocationManager {
         locationManager.stopUpdatingLocation()
     }
     
+    func isFuctionHeadingAvaible(){
+        
+    }
 }

@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 struct ErrorHandling {
-    func errorMessageLocation(){
+    func errorMessageLocation(Controller: UIViewController){
         let alertMessage = UIAlertController.init(title: "We have trouble find your location", message: "we have trouble finding your location. Check your settings and/or your connection", preferredStyle: .alert)
         let alertActionOk = UIAlertAction.init(title: "Ok", style: .default)
         let alertActionCancel = UIAlertAction.init(title: "Cancel", style: .cancel)
@@ -19,7 +19,7 @@ struct ErrorHandling {
         alertMessage.addAction(alertActionOk)
         alertMessage.addAction(alertActionCancel)
         alertMessage.addAction(alertActionGoToSetting)
-        alertMessage.present(alertMessage, animated: true, completion: nil)
+       Controller.present(alertMessage, animated: true, completion: nil)
     }
     
 }

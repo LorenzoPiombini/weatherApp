@@ -11,17 +11,13 @@ import CoreLocation
 
 
 class weatherDisplay: UIViewController, CLLocationManagerDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
-  
-    
-    
-   
-    
-   
    
     
     
-    let locationManager = LocationManager()
+    var city:City?
+    var locationManager = LocationManager()
     let errorHandling = ErrorHandling()
+    
     // the following is the variable to store the data from the API
     var dailyAndHourlyWeather:apiResponseForHourForecastinAndDay?
    
@@ -37,12 +33,13 @@ class weatherDisplay: UIViewController, CLLocationManagerDelegate, UICollectionV
     @IBOutlet weak var collectionViewForecast: UICollectionView!
     @IBOutlet weak var lowerTemperature: UILabel!
     @IBOutlet weak var highestTemerature: UILabel!
-   
+
  
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+      
+
         collectionViewForecast.dataSource = self
         collectionViewForecast.delegate = self
         
@@ -50,13 +47,17 @@ class weatherDisplay: UIViewController, CLLocationManagerDelegate, UICollectionV
         locationManager.startFindingLocation()
         
         todayLbl.text = dateFormat() // using the dateFormat() function to display the date as of today
+        
+        
+        
+        
+    
+    
+    
+    
     }
 
-    @IBAction func updateFprecast(_ sender: Any){
-        locationManager.startFindingLocation()
-        weekBtn.alpha = 1
-        todayBtn.alpha = 0.5
-    }
+  
     
     @IBAction func getFiveDays(_ sender: Any ){
         todayBtn.alpha = 1
@@ -80,12 +81,12 @@ class weatherDisplay: UIViewController, CLLocationManagerDelegate, UICollectionV
             celsius = true
         }
         locationManager.startFindingLocation()
-        collectionViewForecast.reloadData()
-        
     }
     
     
-
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        locationManager.locationStatus()
+    }
     
     // I used this method to generate the API call since the location was crucial for the API call.
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -114,21 +115,21 @@ class weatherDisplay: UIViewController, CLLocationManagerDelegate, UICollectionV
                 
                 weatherConditionlbl.text = "Currently: \(dailyAndHourlyWeather!.current.weather[0].description)"
                 weatherImage.loadFrom(url: URL(string: "http://openweathermap.org/img/wn/\(dailyAndHourlyWeather?.current.weather[0].icon ?? "nothing").png")!)
+            
+                    degreesLbl.text = "\(convertDegrees(degreese: (dailyAndHourlyWeather?.current.temp)!, celsiusTouchInside: celsius ))°"
+                
                 degreesLbl.text = "\(convertDegrees(degreese: (dailyAndHourlyWeather?.current.temp)!, celsiusTouchInside: celsius ))°"
                 lowerTemperature.text = "Lowest: \(convertDegrees(degreese: dailyAndHourlyWeather!.daily[0].temp.min, celsiusTouchInside: celsius))°"
                 highestTemerature.text = "Highest: \(convertDegrees(degreese: dailyAndHourlyWeather!.daily[0].temp.max, celsiusTouchInside: celsius))°"
                 
-                if didSunsetOccured(data: dailyAndHourlyWeather!) {
-                    self.view.backgroundColor = UIColor(patternImage: UIImage(named: "backgroundForNightTime.jpg")!)
-                }else {
-                    self.view.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
-                }
+                setTheBackground(accordingWith: dailyAndHourlyWeather!, viewController: self)
+                
             } onError: { (Error) in
                 print(Error)
             }
                 
                 } else {
-                    errorHandling.errorMessageLocation()
+                    errorHandling.errorMessageLocation(Controller: self)
                 
                    print(error!)
                 }
@@ -147,15 +148,17 @@ class weatherDisplay: UIViewController, CLLocationManagerDelegate, UICollectionV
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("What is going on ?")
-        errorHandling.errorMessageLocation()
+        errorHandling.errorMessageLocation(Controller: self)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if dailyAndHourlyWeather?.hourly == nil {
             return 0
         }else if weekBtn.alpha == 1.0 {
+            
             return dailyAndHourlyWeather!.hourly.count
         }else {
+            
             return dailyAndHourlyWeather!.daily.count
         }
     }
@@ -163,7 +166,9 @@ class weatherDisplay: UIViewController, CLLocationManagerDelegate, UICollectionV
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if weekBtn.alpha == 1.0 {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "forecast", for: indexPath) as? forecastingCollectioViewCell {
+            
             if let hourly = dailyAndHourlyWeather?.hourly[indexPath.row] {
+                
             cell.updateForcastingCollectioViewCell(data: hourly)
                 
             return cell
@@ -172,7 +177,9 @@ class weatherDisplay: UIViewController, CLLocationManagerDelegate, UICollectionV
             }
             
         }} else if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "forecast", for: indexPath) as? forecastingCollectioViewCell{
+            
             if  let daily = dailyAndHourlyWeather?.daily[indexPath.row] {
+                 
                     cell.updateForecastingCollectionViewCellWithTheWeek(data: daily)
                     return cell
         }
@@ -180,9 +187,8 @@ class weatherDisplay: UIViewController, CLLocationManagerDelegate, UICollectionV
         return forecastingCollectioViewCell()
             }
     
-    
+        
 
-    
    
 }
 
