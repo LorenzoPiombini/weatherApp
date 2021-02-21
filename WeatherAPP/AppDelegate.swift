@@ -22,6 +22,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
         
+        
+        //fetching at launch time the City list from the online dataBase
+        
+        fetchingCityList {  (Cities) in
+            var index = 0
+            for _ in Cities {
+                CityList.shared.TriesCity.insert(word: Cities[index].name)
+                
+                index += 1
+            }
+            CityList.shared.citiesDictionary = Cities.reduce(into: [String : coord]()){
+                $0[$1.name] = $1.coord
+            }
+          
+            print(CityList.shared.citiesDictionary.count)
+            
+            
+        } onError: { (String) in
+            print(String)
+        }
+        
+        
+        
+        
+        
         return true
     }
 

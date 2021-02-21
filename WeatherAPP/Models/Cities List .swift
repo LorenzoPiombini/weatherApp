@@ -9,6 +9,13 @@ import Foundation
 import FirebaseDatabase
 
 
+class CityList {
+    static let  shared = CityList()
+    var  TriesCity = Trie()
+    var citiesDictionary = [String : coord]()
+    
+}
+
 
 struct City: Codable {
     var coord: coord

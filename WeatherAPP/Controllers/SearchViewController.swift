@@ -10,8 +10,8 @@ import UIKit
 
 class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource {
     
-    var TrieCities = Trie()
-    var citiesDictionary = [String : coord]()
+    
+   
     var cities:[City]?
     var isSearch = false
     var filteredCities = [String]()
@@ -26,23 +26,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         
         
         
-        fetchingCityList { [self] (Cities) in
-            var index = 0
-            for _ in Cities {
-                TrieCities.insert(word: Cities[index].name)
-                index += 1
-            }
-            citiesDictionary = Cities.reduce(into: [String : coord]()){
-                $0[$1.name] = $1.coord
-            }
-          
-            tableView.reloadData()
-            
-            
-        } onError: { (String) in
-            print(String)
-        }
-        
+
         searchBar.delegate = self
         tableView.delegate = self
         tableView.dataSource = self
@@ -53,11 +37,11 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     //#######################################    TABLE VIEW CONFIG  ######################################
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if citiesDictionary.count > 0 {
+        if CityList.shared.citiesDictionary.count > 0 {
         if isSearch{
             return filteredCities.count
         } else {
-            return citiesDictionary.count
+            return CityList.shared.citiesDictionary.count
         }
         } else {
             return 0
@@ -83,10 +67,19 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let city = filteredCities[indexPath.row]
-        let coord = citiesDictionary[city]!
+        if  let coord = CityList.shared.citiesDictionary[city]{
         let array:[Any] = [city, coord]
+            performSegue(withIdentifier: "cityWeather", sender: array)
+        } else {
+            let alert = UIAlertController(title: "ERROR", message: "This city doesn`t match our record, check if there are any typos or maybe some Capitol letters, Rememebr : City`s name are case sensitive", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { [self] (UIAlertAction) in
+                self.filteredCities.remove(at: indexPath.row)
+                tableView.reloadData()
+            }))
+            present(alert, animated: true, completion: nil)
+        }
+        
        
-        performSegue(withIdentifier: "cityWeather", sender: array)
         
     }
     
@@ -126,9 +119,11 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
             tableView.reloadData()
         } else {
               
-            if  TrieCities.query(word: searchText) {
+            if CityList.shared.TriesCity.query(word: searchText) {
+                if filteredCities.contains(searchText) == false {
                 filteredCities.append(searchText)
                
+                }
             }
             if filteredCities.count == 0 {
                 isSearch = false
