@@ -80,7 +80,10 @@ class weatherDisplay: UIViewController, CLLocationManagerDelegate, UICollectionV
         }else {
             celsius = true
         }
-        locationManager.startFindingLocation()
+        degreesLbl.text = "\(convertDegrees(degreese: (dailyAndHourlyWeather?.current.temp)!, celsiusTouchInside: celsius ))°"
+        lowerTemperature.text = "Lowest: \(convertDegrees(degreese: dailyAndHourlyWeather!.daily[0].temp.min, celsiusTouchInside: celsius))°"
+        highestTemerature.text = "Highest: \(convertDegrees(degreese: dailyAndHourlyWeather!.daily[0].temp.max, celsiusTouchInside: celsius))°"
+        collectionViewForecast.reloadData()
     }
     
     
@@ -169,7 +172,7 @@ class weatherDisplay: UIViewController, CLLocationManagerDelegate, UICollectionV
             
             if let hourly = dailyAndHourlyWeather?.hourly[indexPath.row] {
                 
-            cell.updateForcastingCollectioViewCell(data: hourly)
+                cell.updateForcastingCollectioViewCell(data: hourly, timeOffSet: dailyAndHourlyWeather!.timezone_offset)
                 
             return cell
             } else {
@@ -180,7 +183,7 @@ class weatherDisplay: UIViewController, CLLocationManagerDelegate, UICollectionV
             
             if  let daily = dailyAndHourlyWeather?.daily[indexPath.row] {
                  
-                    cell.updateForecastingCollectionViewCellWithTheWeek(data: daily)
+                cell.updateForecastingCollectionViewCellWithTheWeek(data: daily, timeOffSet: dailyAndHourlyWeather!.timezone_offset)
                     return cell
         }
         }
@@ -188,7 +191,30 @@ class weatherDisplay: UIViewController, CLLocationManagerDelegate, UICollectionV
             }
     
         
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if weekBtn.alpha == 1.0 {
+        let hourly = dailyAndHourlyWeather?.hourly[indexPath.row]
+         performSegue(withIdentifier: "detailsForecast", sender: hourly)
+        } else {
+            let daily = dailyAndHourlyWeather?.daily[indexPath.row]
+            performSegue(withIdentifier: "detailsForecast", sender: daily)
+        }
+        
+    }
 
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let moreWeatherInfo = segue.destination as? moreWeatherInfoViewController{
+            if weekBtn.alpha == 1.0 {
+                moreWeatherInfo.initHorlyInfo(with: sender as! Hourly)
+           
+            
+            }else{
+                moreWeatherInfo.initDailyInfo(with: sender as! Daily)
+            }
+            moreWeatherInfo.allTheDataFromTheAPI = dailyAndHourlyWeather
+        }
+    }
    
 }
 

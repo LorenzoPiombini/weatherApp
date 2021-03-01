@@ -39,7 +39,9 @@ struct Current:Codable {
   var wind_speed: Double
   var wind_deg: Int
   var wind_gust: Double?
-  var weather: [weather]
+  var weather: [Weather]
+  
+  
 }
 
 
@@ -56,7 +58,7 @@ struct Hourly: Codable {
   var visibility:Int?
   var wind_speed: Double
   var wind_deg: Int
-  var weather: [weather]
+  var weather: [Weather]
   var pop: Double
 }
  
@@ -75,7 +77,7 @@ struct Daily: Codable {
     var visibility:Int?
     var wind_speed: Double
     var wind_deg: Int
-    var weather: [weather]
+    var weather: [Weather]
     var rain: Double?
     var snow: Double?
     var pop: Double
@@ -100,11 +102,26 @@ struct FeelsLike: Codable {
 
 
 
-struct weather: Codable {
+struct Weather: Codable {
     var  id: Int
     var  main: String
     var description: String
     var icon: String
+    
+    enum CodingKeys: String, CodingKey{
+        case id
+        case main
+        case description
+        case icon
+    }
+    
+    init(from decoder: Decoder) throws {
+        let valueContainer = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try valueContainer.decode(Int.self, forKey: CodingKeys.id)
+        self.main = try valueContainer.decode(String.self, forKey: CodingKeys.main)
+        self.description = try valueContainer.decode(String.self, forKey: CodingKeys.description)
+        self.icon = try valueContainer.decode(String.self, forKey: CodingKeys.icon)
+    }
 }
 
 

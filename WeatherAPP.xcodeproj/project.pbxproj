@@ -19,6 +19,9 @@
 		745E1D4625DF3143000A2A71 /* CityWeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745E1D4525DF3143000A2A71 /* CityWeatherViewController.swift */; };
 		745E1D4725DF3143000A2A71 /* CityWeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745E1D4525DF3143000A2A71 /* CityWeatherViewController.swift */; };
 		745E1D4825DF3143000A2A71 /* CityWeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745E1D4525DF3143000A2A71 /* CityWeatherViewController.swift */; };
+		7462DE0E25E331B000E02129 /* moreWeatherInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7462DE0D25E331B000E02129 /* moreWeatherInfoViewController.swift */; };
+		7462DE0F25E331B000E02129 /* moreWeatherInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7462DE0D25E331B000E02129 /* moreWeatherInfoViewController.swift */; };
+		7462DE1025E331B000E02129 /* moreWeatherInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7462DE0D25E331B000E02129 /* moreWeatherInfoViewController.swift */; };
 		7479568225C6EF1300A567B4 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7479568125C6EF1300A567B4 /* LocationManager.swift */; };
 		7479568725C6F57A00A567B4 /* ImageFetchingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7479568625C6F57A00A567B4 /* ImageFetchingHelper.swift */; };
 		7479568C25C6F6C900A567B4 /* ErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7479568B25C6F6C900A567B4 /* ErrorHandling.swift */; };
@@ -74,6 +77,7 @@
 		745E1D3925DF0E30000A2A71 /* TrieCities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrieCities.swift; sourceTree = "<group>"; };
 		745E1D3E25DF2074000A2A71 /* cityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cityTableViewCell.swift; sourceTree = "<group>"; };
 		745E1D4525DF3143000A2A71 /* CityWeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityWeatherViewController.swift; sourceTree = "<group>"; };
+		7462DE0D25E331B000E02129 /* moreWeatherInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = moreWeatherInfoViewController.swift; sourceTree = "<group>"; };
 		7479568125C6EF1300A567B4 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		7479568625C6F57A00A567B4 /* ImageFetchingHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFetchingHelper.swift; sourceTree = "<group>"; };
 		7479568B25C6F6C900A567B4 /* ErrorHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandling.swift; sourceTree = "<group>"; };
@@ -225,6 +229,7 @@
 				748F93EC25944613008B9694 /* weatherDisplay.swift */,
 				74E908EB25D8D64400073E94 /* SearchViewController.swift */,
 				745E1D4525DF3143000A2A71 /* CityWeatherViewController.swift */,
+				7462DE0D25E331B000E02129 /* moreWeatherInfoViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -512,6 +517,7 @@
 				748F93EB25944613008B9694 /* SceneDelegate.swift in Sources */,
 				745E1D4625DF3143000A2A71 /* CityWeatherViewController.swift in Sources */,
 				748F5915259AC78100FEDD14 /* APIError.swift in Sources */,
+				7462DE0E25E331B000E02129 /* moreWeatherInfoViewController.swift in Sources */,
 				745E1D3A25DF0E30000A2A71 /* TrieCities.swift in Sources */,
 				745E1D3F25DF2074000A2A71 /* cityTableViewCell.swift in Sources */,
 				7479568225C6EF1300A567B4 /* LocationManager.swift in Sources */,
@@ -523,6 +529,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				745E1D4725DF3143000A2A71 /* CityWeatherViewController.swift in Sources */,
+				7462DE0F25E331B000E02129 /* moreWeatherInfoViewController.swift in Sources */,
 				74E908ED25D8D64400073E94 /* SearchViewController.swift in Sources */,
 				74E9090925D9607700073E94 /* Cities List .swift in Sources */,
 				748F940325944614008B9694 /* WeatherAPPTests.swift in Sources */,
@@ -536,6 +543,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				745E1D4825DF3143000A2A71 /* CityWeatherViewController.swift in Sources */,
+				7462DE1025E331B000E02129 /* moreWeatherInfoViewController.swift in Sources */,
 				74E908EE25D8D64400073E94 /* SearchViewController.swift in Sources */,
 				74E9090A25D9607700073E94 /* Cities List .swift in Sources */,
 				748F940E25944614008B9694 /* WeatherAPPUITests.swift in Sources */,

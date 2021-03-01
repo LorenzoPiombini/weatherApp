@@ -66,9 +66,13 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        if filteredCities.count != 0 {
         let city = filteredCities[indexPath.row]
+            
         if  let coord = CityList.shared.citiesDictionary[city]{
         let array:[Any] = [city, coord]
+            
             performSegue(withIdentifier: "cityWeather", sender: array)
         } else {
             let alert = UIAlertController(title: "ERROR", message: "This city doesn`t match our record, check if there are any typos or maybe some Capitol letters, Rememebr : City`s name are case sensitive", preferredStyle: .alert)
@@ -79,7 +83,9 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
             present(alert, animated: true, completion: nil)
         }
         
-       
+        } else {
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
         
     }
     
@@ -139,15 +145,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
             }
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+    
 
 
     

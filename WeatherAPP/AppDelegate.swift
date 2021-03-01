@@ -44,10 +44,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         
-        
-        
-        
+        if CityList.shared.citiesDictionary.count > 0 {
         return true
+        }else {
+        
+        return false
+        }
     }
 
     // MARK: UISceneSession Lifecycle

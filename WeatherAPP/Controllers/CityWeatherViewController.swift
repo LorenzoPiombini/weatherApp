@@ -74,6 +74,9 @@ class CityWeatherViewController: UIViewController, UICollectionViewDelegate, UIC
         }else {
             celsius = true
         }
+        degreesLbl.text = "\(convertDegrees(degreese: (dailyAndHourlyWeather?.current.temp)!, celsiusTouchInside: celsius ))°"
+        lowerTemperature.text = "Lowest: \(convertDegrees(degreese: dailyAndHourlyWeather!.daily[0].temp.min, celsiusTouchInside: celsius))°"
+        highestTemerature.text = "Highest: \(convertDegrees(degreese: dailyAndHourlyWeather!.daily[0].temp.max, celsiusTouchInside: celsius))°"
         collectionViewForecast.reloadData()
     }
     
@@ -92,12 +95,13 @@ class CityWeatherViewController: UIViewController, UICollectionViewDelegate, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         if weekBtn.alpha == 1.0 {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "forecast", for: indexPath) as? forecastingCollectioViewCell {
             
             if let hourly = dailyAndHourlyWeather?.hourly[indexPath.row] {
                 
-            cell.updateForcastingCollectioViewCell(data: hourly)
+                cell.updateForcastingCollectioViewCell(data: hourly, timeOffSet: dailyAndHourlyWeather!.timezone_offset)
                 
             return cell
             } else {
@@ -108,10 +112,11 @@ class CityWeatherViewController: UIViewController, UICollectionViewDelegate, UIC
             
             if  let daily = dailyAndHourlyWeather?.daily[indexPath.row] {
                  
-                    cell.updateForecastingCollectionViewCellWithTheWeek(data: daily)
+                cell.updateForecastingCollectionViewCellWithTheWeek(data: daily, timeOffSet: dailyAndHourlyWeather!.timezone_offset)
                     return cell
         }
         }
+    
         return forecastingCollectioViewCell()
             
     
@@ -141,8 +146,24 @@ class CityWeatherViewController: UIViewController, UICollectionViewDelegate, UIC
     }
     
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if weekBtn.alpha == 0.5 {
+            performSegue(withIdentifier: "showDetailsFromCity", sender: dailyAndHourlyWeather?.daily[indexPath.row])
+        }else {
+            performSegue(withIdentifier: "showDetailsFromCity", sender: dailyAndHourlyWeather?.hourly[indexPath.row])
+        }
+    }
     
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let moreWeatherInfo = segue.destination as? moreWeatherInfoViewController {
+            if weekBtn.alpha == 0.5{
+            moreWeatherInfo.initDailyInfo(with: sender as! Daily)
+            } else {
+                moreWeatherInfo.initHorlyInfo(with: sender as! Hourly)
+            }
+            moreWeatherInfo.initApiResponse(with: dailyAndHourlyWeather!)
+        }
+    }
 
     /*
     // MARK: - Navigation
